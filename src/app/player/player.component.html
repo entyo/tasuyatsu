@@ -1,0 +1,12 @@
+<div class="player">
+  <p>
+    <i class="fa fa-play-circle" aria-hidden="true" (click)="play()" *ngIf="!playing"></i>
+    <i class="fa fa-pause-circle" aria-hidden="true" (click)="pause()" *ngIf="playing"></i>
+    <span>song title</span>
+    <i class="fa fa-refresh" aria-hidden="true" (click)="toggleRepeatingState()" [class.repeating]="repeatingState === 'active'"></i>
+  </p>
+  <div class="form-group">
+    <label class="control-label">Volume</label>
+    <input type="range" class="form-control" min="0" max="100" value="100"/>
+  </div>
+</div>

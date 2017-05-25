@@ -1,0 +1,16 @@
+i {
+  vertical-align: middle;
+}
+
+.fa-refresh {
+  margin-left: 32px;
+}
+
+.repeating {
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
+}

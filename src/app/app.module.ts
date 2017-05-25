@@ -4,15 +4,20 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { PlayerComponent } from './player/player.component';
+
+import { Ng2BootstrapModule } from 'ng2-bootstrap';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PlayerComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    Ng2BootstrapModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
