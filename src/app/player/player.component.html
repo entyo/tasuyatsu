@@ -11,7 +11,7 @@
   <p>
     <i class="fa fa-play-circle" aria-hidden="true" (click)="play()" *ngIf="!playing"></i>
     <i class="fa fa-pause-circle" aria-hidden="true" (click)="pause()" *ngIf="playing"></i>
-    <i class="fa fa-refresh" aria-hidden="true" (click)="toggleRepeatingState()" [class.repeating]="repeatingState === 'active'"></i>
+    <i class="fa fa-refresh" aria-hidden="true" (click)="toggleRepeatingState()" [class.repeating]="repeatingState === 'active' && playing"></i>
   </p>
   <div class="form-group">
     <label class="control-label">Volume</label>
