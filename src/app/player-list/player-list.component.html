@@ -1,0 +1,4 @@
+<h2>All sounds</h2>
+<div *ngFor="let sound of (store.list | async)" >
+  <app-player [sound]="sound" (update)="updateSound($event)" (remove)="removeSound($event)"></app-player>
+</div>

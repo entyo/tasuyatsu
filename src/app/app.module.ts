@@ -3,13 +3,17 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { Ng2BootstrapModule } from 'ng2-bootstrap';
+import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
+
 import { AppComponent } from './app.component';
 import { PlayerComponent } from './player/player.component';
-
-import { Ng2BootstrapModule } from 'ng2-bootstrap';
-
 import { FileUploaderComponent } from './file-uploader/file-uploader.component';
-import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
+import { PlayerListComponent } from './player-list/player-list.component';
+
+import { SharedModule } from './shared/shared.module';
+
+import { AppStore } from './app.store';
 
 @NgModule({
   declarations: [
@@ -17,15 +21,17 @@ import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
     PlayerComponent,
     FileUploaderComponent,
     FileSelectDirective,
-    FileDropDirective
+    FileDropDirective,
+    PlayerListComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     Ng2BootstrapModule.forRoot(),
+    SharedModule.forRoot()
   ],
-  providers: [],
+  providers: [AppStore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,28 +1,50 @@
-#container {
-  width: 70%;
-  margin-top: 20px;
+#root-container {
+  width: 85%;
+  height: 90%;
+  margin: 80px 0 80px 0;
   margin-left: auto;
   margin-right: auto;
 }
 
-#content {
+.content {
   width: 90%;
+  height: 90%;
   margin-left: auto;
   margin-right: auto;
 }
 
-header nav {
-  margin: 0px;
+header {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #c9c9c9;
+}
+
+header p {
+  color: #444444;
+  font-size: 20px;
+  margin: 15px 0;
+  padding-right: 15px;
+  padding-left: 15px;  
 }
 
 footer {
-  background-color: #f9f9f9;
-  color: #999;
-  text-align: center;
   position: fixed;
-  height: 80px;
   bottom: 0px;
   width: 100%;
-  padding-top: 40px;
-  padding-bottom: 40px;
-} 
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #c9c9c9;
+}
+
+footer p {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  color: #444444;
+  margin: 20px 0;
+  padding-right: 15px;
+  padding-left: 15px;
+}

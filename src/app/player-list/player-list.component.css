@@ -1,22 +1,9 @@
-.player {
-  background-color: whitesmoke;
-  height: 15%;
-  padding: 2%;
-  margin: 2% 0;
-  /*border: 2px solid whitesmoke;*/
-}
-
-.fa {
+i {
   vertical-align: middle;
-  display:inline-block;
 }
 
 .fa-refresh {
   margin-left: 32px;
-}
-
-.fa-trash {
-  margin-left: 5px;
 }
 
 .repeating {
