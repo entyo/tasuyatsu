@@ -10,6 +10,7 @@ export class PlayerComponent implements OnInit {
   @Input() sound: Sound;
   private playing: boolean;
   private repeatingState: string;
+  private editing = false;
 
   @Output() update = new EventEmitter<Sound>();
   @Output() remove = new EventEmitter<Sound>();
@@ -45,6 +46,10 @@ export class PlayerComponent implements OnInit {
   removeSound(e: Event) {
     e.stopPropagation();
     this.remove.emit(this.sound);
+  }
+
+  switchEditMode() {
+    this.editing = !this.editing;
   }
 
 }

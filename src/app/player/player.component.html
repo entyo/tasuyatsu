@@ -1,10 +1,17 @@
 <div class="player">
   <p>
+    <i class="fa fa-pencil" aria-hidden="true" (click)="switchEditMode()"></i>
+    <span>{{sound.title}}</span>
+    <i class="fa fa-trash fa-pull-right" aria-hidden="true" (click)="removeSound($event)"></i>
+  </p>
+  <div class="form-group" *ngIf="editing">
+    <input type="text" class="form-control" [(ngModel)]="sound.title" placeholder="もっといいタイトルを頼む">
+    <button type="submit" class="btn btn-default" (click)="switchEditMode()">こり!</button>
+  </div>
+  <p>
     <i class="fa fa-play-circle" aria-hidden="true" (click)="play()" *ngIf="!playing"></i>
     <i class="fa fa-pause-circle" aria-hidden="true" (click)="pause()" *ngIf="playing"></i>
-    {{sound.title}}
     <i class="fa fa-refresh" aria-hidden="true" (click)="toggleRepeatingState()" [class.repeating]="repeatingState === 'active'"></i>
-    <i class="fa fa-trash" aria-hidden="true" (click)="removeSound($event)"></i>
   </p>
   <div class="form-group">
     <label class="control-label">Volume</label>

@@ -6,13 +6,21 @@
   /*border: 2px solid whitesmoke;*/
 }
 
-.fa {
+p .fa {
   vertical-align: middle;
   display:inline-block;
 }
 
+p span {
+  vertical-align: middle
+}
+
+.fa-pencil {
+  margin-right: 5px;
+}
+
 .fa-refresh {
-  margin-left: 32px;
+  margin-left: 5px;
 }
 
 .fa-trash {
