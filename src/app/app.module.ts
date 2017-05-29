@@ -12,12 +12,15 @@ import { PlayerListComponent } from './player-list/player-list.component';
 import { SharedModule } from './shared/shared.module';
 
 import { AppStore } from './app.store';
+import { AddSoundComponent } from './add-sound/add-sound.component';
+import { AudioService } from './audio.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlayerComponent,
-    PlayerListComponent
+    PlayerListComponent,
+    AddSoundComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,10 @@ import { AppStore } from './app.store';
     Ng2BootstrapModule.forRoot(),
     SharedModule.forRoot()
   ],
-  providers: [AppStore],
+  providers: [
+    AppStore,
+    AudioService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

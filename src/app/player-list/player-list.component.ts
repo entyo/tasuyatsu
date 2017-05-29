@@ -10,7 +10,7 @@ import { SoundStore } from '../shared/stores/sound.store';
 })
 export class PlayerListComponent implements OnInit {
 
-  constructor(protected store: SoundStore) { }
+  constructor(private store: SoundStore) { }
 
   ngOnInit() {
   }

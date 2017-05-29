@@ -1,6 +1,5 @@
 export class Sound {
   public id: number;
-  public url: string;
   public arrayBuffer: ArrayBuffer;
-  constructor(public title: string) {}
+  constructor(public title?: string, public url?: string) {}
 }
