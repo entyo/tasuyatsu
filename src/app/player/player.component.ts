@@ -9,15 +9,15 @@ import { Sound } from '../shared/models/sound';
 export class PlayerComponent implements OnInit {
   @Input() sound: Sound;
   private playing: boolean;
-  private repeatingState: string;
+  private loop: boolean;
   private editing = false;
 
   @Output() update = new EventEmitter<Sound>();
   @Output() remove = new EventEmitter<Sound>();
 
-  constructor() {
+  constructor(private audioService: AudioService) {
     this.playing = false;
-    this.repeatingState = 'inactive';
+    this.loop = false;
   }
 
   ngOnInit() {
@@ -33,9 +33,9 @@ export class PlayerComponent implements OnInit {
     this.playing = false;
   }
   
-  toggleRepeatingState() {
-    this.repeatingState = (this.repeatingState === 'active' ? 'inactive' : 'active');
-    console.log("RepeatingState: ", this.repeatingState);
+  switchLoop() {
+    this.loop = !this.loop
+    console.log("loop: ", this.loop);
   }
 
   editTitle(newTitle: string) {
