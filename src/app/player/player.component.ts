@@ -20,10 +20,15 @@ export class PlayerComponent implements OnInit {
   }
 
   play() {
+    this.sound.loading = true;
+    this.update.emit(this.sound);
+
     this.audioService.play(this.sound)
     .then(s => {
-      console.log("Played");
+      s.loading = false;
       this.update.emit(s);
+      console.log("Played");
+      console.log(this.sound);
     });
   }
 

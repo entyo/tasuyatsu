@@ -8,11 +8,16 @@
     <input type="text" class="form-control" [(ngModel)]="sound.title" placeholder="もっといいタイトルを頼む">
     <button type="submit" class="btn btn-default" (click)="switchEditMode()">こり!</button>
   </div>
-  <p>
-    <i class="fa fa-play-circle" aria-hidden="true" (click)="play()" *ngIf="!sound.playing"></i>
-    <i class="fa fa-pause-circle" aria-hidden="true" (click)="pause()" *ngIf="sound.playing"></i>
-    <i class="fa fa-refresh" aria-hidden="true" (click)="switchLoop()" [class.repeating]="sound.loop && sound.playing"></i>
-  </p>
+  <div>
+    <i class="fa fa-play-circle fa-fw" aria-hidden="true" (click)="play()" *ngIf="!sound.playing && !sound.loading"></i>
+    <i class="fa fa-pause-circle fa-fw" aria-hidden="true" (click)="pause()" *ngIf="sound.playing && !sound.loading"></i>
+    <i class="fa fa-refresh fa-fw loading" aria-hidden="true" *ngIf="sound.loading"></i>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" (click)="switchLoop()" [ngModel]="sound.loop"> loop
+      </label>
+    </div>
+  </div>
   <div class="form-group">
     <label class="control-label">Volume</label>
     <input type="range" class="form-control" min="0" max="100" value="50" #ref (change)="changeVolume(ref.value)" />

@@ -5,5 +5,6 @@ export class Sound {
   public playing = false;
   public loop = false;
   public editing = false;
+  public loading = false;
   constructor(public title?: string, public url?: string) {}
 }
