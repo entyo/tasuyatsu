@@ -13,8 +13,17 @@ export class AudioService {
     return new Promise( (resolve, reject) => {
       let xhr = new XMLHttpRequest();
       xhr.open('GET', sound.url, true);
-      xhr.responseType = 'arraybuffer'; 
-  
+      xhr.responseType = 'arraybuffer';
+
+      // 既に一度音源を取得している場合、XHRをせず単にnodeを作り直す
+      if (sound.sourceNode) {
+        const b = sound.sourceNode.buffer;
+        sound.sourceNode = global.audioContext.createBufferSource();
+        sound.sourceNode.buffer = b;
+        sound.sourceNode.loop = sound.loop;          
+        resolve(sound);
+      }
+
       xhr.onload = () => {
         if (xhr.status !== 200) {
           reject(new Error('Audio data couldn\'t be loaded successfully; error code:' + xhr.statusText));
@@ -39,12 +48,6 @@ export class AudioService {
 
   play(sound: Sound): Promise<Sound> {
     return new Promise((resolve, reject) => {
-      // AudioBufferSourceNode は一度しか再生できないので、これは使えない
-      // 毎回リクエスト飛ばすのは色々しんどいので、どうにかしたい
-      // if (sound.sourceNode) {
-      //     sound.sourceNode.start();
-      //     resolve(sound);
-      // }
       this.load(sound)
       .then(s => {
         s.gainNode = global.audioContext.createGain();
