@@ -1,4 +1,5 @@
-# Tasuyatsu
+# tasuyatsu
+LTとかで笑い声等を足すやつ
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
