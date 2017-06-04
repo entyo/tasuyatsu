@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { Sound } from '../shared/models/sound';
 import { SoundStore } from '../shared/stores/sound.store';
-import { AudioService } from '../audio.service';
 
 @Component({
   selector: 'app-add-sound',
@@ -12,7 +11,7 @@ import { AudioService } from '../audio.service';
 export class AddSoundComponent implements OnInit {
   public fileURL: string;
 
-  constructor(protected store: SoundStore, private audioService: AudioService) { }
+  constructor(protected store: SoundStore) { }
 
   ngOnInit() {
   }
