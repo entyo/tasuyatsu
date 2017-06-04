@@ -40,3 +40,11 @@ p span {
   margin-left: 30px;
   display: inline-block;
 }
+
+.fa-pencil {
+  cursor: pointer;  
+}
+
+.song-title {
+  cursor: pointer;  
+}

@@ -1,7 +1,7 @@
 <div class="player">
   <p>
     <i class="fa fa-pencil" aria-hidden="true" (click)="switchEditMode()"></i>
-    <span>{{sound.title}}</span>
+    <span class="song-title" (click)="switchEditMode()">{{sound.title}}</span>
     <i class="fa fa-trash fa-pull-right" aria-hidden="true" (click)="removeSound($event)"></i>
   </p>
   <div class="form-group" *ngIf="sound.editing">
