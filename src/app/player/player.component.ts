@@ -32,10 +32,10 @@ export class PlayerComponent implements OnInit {
     });
   }
 
-  pause() {
-    this.audioService.pause(this.sound)
+  stop() {
+    this.audioService.stop(this.sound)
     .then(s => {
-      console.log("Paused");
+      console.log("Stopped");
       this.update.emit(s);
     });
   }

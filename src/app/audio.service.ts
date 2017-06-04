@@ -65,7 +65,7 @@ export class AudioService {
     });   
   }
 
-  pause(sound: Sound): Promise<Sound> {
+  stop(sound: Sound): Promise<Sound> {
     return new Promise((resolve, reject) => {
       if (!sound.sourceNode) {
         reject(new Error('SoundにAudioBufferSourceNodeが設定されていません'));
