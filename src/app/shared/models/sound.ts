@@ -1,5 +1,9 @@
 export class Sound {
   public id: number;
-  public arrayBuffer: ArrayBuffer;
+  public sourceNode: AudioBufferSourceNode;
+  public gainNode: GainNode;
+  public playing = false;
+  public loop = false;
+  public editing = false;
   constructor(public title?: string, public url?: string) {}
 }

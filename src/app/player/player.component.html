@@ -4,17 +4,17 @@
     <span>{{sound.title}}</span>
     <i class="fa fa-trash fa-pull-right" aria-hidden="true" (click)="removeSound($event)"></i>
   </p>
-  <div class="form-group" *ngIf="editing">
+  <div class="form-group" *ngIf="sound.editing">
     <input type="text" class="form-control" [(ngModel)]="sound.title" placeholder="もっといいタイトルを頼む">
     <button type="submit" class="btn btn-default" (click)="switchEditMode()">こり!</button>
   </div>
   <p>
-    <i class="fa fa-play-circle" aria-hidden="true" (click)="play()" *ngIf="!playing"></i>
-    <i class="fa fa-pause-circle" aria-hidden="true" (click)="pause()" *ngIf="playing"></i>
-    <i class="fa fa-refresh" aria-hidden="true" (click)="switchLoop()" [class.repeating]="loop && playing"></i>
+    <i class="fa fa-play-circle" aria-hidden="true" (click)="play()" *ngIf="!sound.playing"></i>
+    <i class="fa fa-pause-circle" aria-hidden="true" (click)="pause()" *ngIf="sound.playing"></i>
+    <i class="fa fa-refresh" aria-hidden="true" (click)="switchLoop()" [class.repeating]="sound.loop && sound.playing"></i>
   </p>
   <div class="form-group">
     <label class="control-label">Volume</label>
-    <input type="range" class="form-control" min="0" max="100" value="100" />
+    <input type="range" class="form-control" min="0" max="100" value="50" #ref (change)="changeVolume(ref.value)" />
   </div>
 </div>

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Sound } from '../shared/models/sound';
+import * as global from '../global';
+import { AudioService } from '../audio.service';
 
 @Component({
   selector: 'app-player',
@@ -8,34 +10,35 @@ import { Sound } from '../shared/models/sound';
 })
 export class PlayerComponent implements OnInit {
   @Input() sound: Sound;
-  private playing: boolean;
-  private loop: boolean;
-  private editing = false;
 
   @Output() update = new EventEmitter<Sound>();
   @Output() remove = new EventEmitter<Sound>();
 
-  constructor(private audioService: AudioService) {
-    this.playing = false;
-    this.loop = false;
-  }
+  constructor(private audioService: AudioService) {}
 
   ngOnInit() {
   }
 
   play() {
-    console.log("Played");
-    this.playing = true;
+    this.audioService.play(this.sound)
+    .then(s => {
+      console.log("Played");
+      this.update.emit(s);
+    });
   }
 
   pause() {
-    console.log("Paused");
-    this.playing = false;
+    this.audioService.pause(this.sound)
+    .then(s => {
+      console.log("Paused");
+      this.update.emit(s);
+    });
   }
   
   switchLoop() {
-    this.loop = !this.loop
-    console.log("loop: ", this.loop);
+    this.sound.loop = !this.sound.loop;
+    console.log("loop: ", this.sound.loop);
+    this.update.emit(this.sound);
   }
 
   editTitle(newTitle: string) {
@@ -49,7 +52,18 @@ export class PlayerComponent implements OnInit {
   }
 
   switchEditMode() {
-    this.editing = !this.editing;
+    this.sound.editing = !this.sound.editing;
+    this.update.emit(this.sound);
+  }
+
+  changeVolume(v: number) {
+    if (!this.sound.gainNode) {
+      return;
+    }
+    // TODO: Volumeの最大値はModuleの一部として定数をまとめたファイルみたいなところで定義する
+    this.sound.gainNode.gain.value = this.audioService.calcGainValue(v, 100);
+    console.log("Volume changed: ", this.sound.gainNode.gain.value);
+    this.update.emit(this.sound);
   }
 
 }
