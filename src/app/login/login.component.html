@@ -1,0 +1,6 @@
+<nav class="nav navbar-nav navbar-right">
+  <button class="btn btn-default navbar-btn" (click)="switchLoginStatus()">{{allowedAction}}</button>
+  <!--<button class="btn btn-default navbar-btn" (click)="login()" *ngIf="!isLoggedIn">login</button>
+  <button class="btn btn-default navbar-btn" (click)="logout()" *ngIf="isLoggedIn">logout</button>-->
+  <p class="navbar-text" *ngIf="isLoggedIn">{{(afAuth.authState | async)?.displayName}} としてログイン</p>
+</nav>

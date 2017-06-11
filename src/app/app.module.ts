@@ -15,19 +15,29 @@ import { AppStore } from './app.store';
 import { AddSoundComponent } from './add-sound/add-sound.component';
 import { AudioService } from './audio.service';
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { environment } from '../environments/environment';
+import { LoginComponent } from './login/login.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     PlayerComponent,
     PlayerListComponent,
-    AddSoundComponent
+    AddSoundComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     Ng2BootstrapModule.forRoot(),
-    SharedModule.forRoot()
+    SharedModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   providers: [
     AppStore,
