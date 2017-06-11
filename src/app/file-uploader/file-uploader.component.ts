@@ -12,7 +12,7 @@ import * as firebase from 'firebase';
   styleUrls: ['./file-uploader.component.css']
 })
 export class FileUploaderComponent {
-  private uploadProgress: number;
+  public uploadProgress: number;
   private files: FileList;
   private userRef: firebase.storage.Reference;
 
