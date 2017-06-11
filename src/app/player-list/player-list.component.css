@@ -2,6 +2,23 @@ i {
   vertical-align: middle;
 }
 
+h2 {
+  font-size: 24px;
+}
+
+h2 .fa {
+  vertical-align: middle;
+  display:inline-block;
+}
+
+h2 span {
+  vertical-align: middle;
+}
+
+.fa-music {
+  margin-right: 5px;
+}
+
 .fa-refresh {
   margin-left: 32px;
 }

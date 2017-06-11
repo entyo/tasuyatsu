@@ -1,9 +1,13 @@
 .player {
   background-color: whitesmoke;
   height: 15%;
-  padding: 2%;
+  padding: 1% 2% 1% 2%;
   margin: 2% 0;
   /*border: 2px solid whitesmoke;*/
+}
+
+p {
+  margin-bottom: 1%;
 }
 
 p .fa {
@@ -17,6 +21,7 @@ p span {
 
 .fa-pencil {
   margin-right: 5px;
+  cursor: pointer;
 }
 
 .fa-refresh {
@@ -37,12 +42,8 @@ p span {
 }
 
 .checkbox {
-  margin-left: 30px;
+  margin-left: 10px;
   display: inline-block;
-}
-
-.fa-pencil {
-  cursor: pointer;  
 }
 
 .song-title {

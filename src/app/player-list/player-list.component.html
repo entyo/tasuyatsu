@@ -1,4 +1,7 @@
-<h2>All sounds</h2>
+<h2>
+  <i class="fa fa-music fa-fw" aria-hidden="true"></i>
+  <span>使える音一覧</span>  
+</h2>
 <div *ngFor="let sound of (store.list | async)" >
   <app-player [sound]="sound" (update)="updateSound($event)" (remove)="removeSound($event)"></app-player>
 </div>

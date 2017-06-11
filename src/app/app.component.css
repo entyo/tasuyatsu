@@ -6,6 +6,10 @@
   margin-right: auto;
 }
 
+.jumbotron {
+  padding: 1% 0 1% 0;
+}
+
 .content {
   width: 90%;
   height: 90%;

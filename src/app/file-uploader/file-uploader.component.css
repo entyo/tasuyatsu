@@ -1,3 +1,17 @@
 .help-block {
   font-size: 12px;
 }
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 2%;
+}
+
+h2 .fa {
+  vertical-align: middle;
+  display:inline-block;
+}
+
+h2 span {
+  vertical-align: middle;
+}
