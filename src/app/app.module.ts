@@ -12,7 +12,6 @@ import { PlayerListComponent } from './player-list/player-list.component';
 import { SharedModule } from './shared/shared.module';
 
 import { AppStore } from './app.store';
-import { AddSoundComponent } from './add-sound/add-sound.component';
 import { AudioService } from './audio.service';
 
 import { AngularFireModule } from 'angularfire2';
@@ -20,14 +19,15 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { LoginComponent } from './login/login.component';
+import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlayerComponent,
     PlayerListComponent,
-    AddSoundComponent,
-    LoginComponent
+    LoginComponent,
+    FileUploaderComponent
   ],
   imports: [
     BrowserModule,

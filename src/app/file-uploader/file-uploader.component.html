@@ -1,0 +1,6 @@
+<h2>Add sound</h2>
+<div class="form-group">
+  <label for="sound-file">音声ファイルをアップロード(1ユーザにつき累計N[MB]まで)</label>
+  <input type="file" id="sound-file" ngModel (change)="onSelectFile($event)" accept="audio/*">
+  <p class="help-block" *ngIf="uploadProgress > 0">Upload is {{uploadProgress}}% done</p>
+</div>
