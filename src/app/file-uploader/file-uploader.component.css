@@ -12,6 +12,10 @@ h2 .fa {
   display:inline-block;
 }
 
+.fa-file-audio-o {
+  margin-right: 5px;
+}
+
 h2 span {
   vertical-align: middle;
 }
