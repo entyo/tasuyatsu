@@ -8,6 +8,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
+    "deploy": "ng build -prod -sm -ec -bh /tasuyatsu/ && gh-pages -d dist",
     "e2e": "ng e2e"
   },
   "private": true,
@@ -35,6 +36,7 @@
     "@types/node": "~6.0.60",
     "bootstrap": "^3.3.7",
     "codelyzer": "~2.0.0",
+    "gh-pages": "^1.0.0",
     "jasmine-core": "~2.5.2",
     "jasmine-spec-reporter": "~3.2.0",
     "jquery": "^3.2.1",
