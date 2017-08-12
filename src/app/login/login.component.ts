@@ -15,7 +15,7 @@ export class LoginComponent {
   constructor(public afAuth: AngularFireAuth) {
     afAuth.authState.subscribe(auth => {
       this.isLoggedIn = auth ? true : false;
-      this.allowedAction = this.isLoggedIn ? "ログアウト" : "ログイン"
+      this.allowedAction = this.isLoggedIn ? 'ログアウト' : 'ログイン';
     });
   }
 
@@ -26,5 +26,5 @@ export class LoginComponent {
       this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider());
     }
   }
-  
+
 }

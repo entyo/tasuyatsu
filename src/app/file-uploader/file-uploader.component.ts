@@ -24,19 +24,19 @@ export class FileUploaderComponent {
     console.log(this.files);
 
     for (let i = 0; i < this.files.length; ++i) {
-      if (!this.makeRef(this.files.item(i).name)){
-        return
+      if (!this.makeRef(this.files.item(i).name)) {
+        return;
       }
 
-      let uploadTask = this.userRef.put(this.files.item(i));
+      const uploadTask = this.userRef.put(this.files.item(i));
       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot: any) => {
         this.uploadProgress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
         console.log('Upload is ' + this.uploadProgress + '% done');
       }, () => {
-        alert("Error uploading an item to filestorage :-(");
+        alert('Error uploading an item to filestorage :-(');
         this.uploadProgress = 0;
       }, () => {
-        let downloadURL = uploadTask.snapshot.downloadURL;
+        const downloadURL = uploadTask.snapshot.downloadURL;
         const sound = new Sound(this.files.item(i).name, downloadURL);
         this.store.insert(sound);
         this.uploadProgress = 0;
@@ -51,7 +51,7 @@ export class FileUploaderComponent {
       return false;
     }
 
-    let user = firebase.auth().currentUser;
+    const user = firebase.auth().currentUser;
     console.log(user.uid + '/' + filename);
     this.userRef = firebase.storage().ref().child(user.uid + '/' + filename);
     return true;

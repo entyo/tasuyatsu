@@ -16,12 +16,12 @@ export class AudioService {
         const b = sound.sourceNode.buffer;
         sound.sourceNode = global.audioContext.createBufferSource();
         sound.sourceNode.buffer = b;
-        sound.sourceNode.loop = sound.loop;          
+        sound.sourceNode.loop = sound.loop;
         resolve(sound);
         return;
       }
 
-      let xhr = new XMLHttpRequest();
+      const xhr = new XMLHttpRequest();
       xhr.open('GET', sound.url, true);
       xhr.responseType = 'arraybuffer';
 
@@ -32,7 +32,7 @@ export class AudioService {
         global.audioContext.decodeAudioData(xhr.response, (buf) => {
           sound.sourceNode = global.audioContext.createBufferSource();
           sound.sourceNode.buffer = buf;
-          sound.sourceNode.loop = sound.loop;          
+          sound.sourceNode.loop = sound.loop;
           resolve(sound);
         }, () => {
           reject(new Error('Audio data seemed to be loaded succesfully, but couldn\'t be decoded.'));
@@ -41,8 +41,8 @@ export class AudioService {
 
       xhr.onerror = () => {
         reject(new Error('Network error :-('));
-      }
-      
+      };
+
       xhr.send(null);
     });
   }
@@ -53,7 +53,7 @@ export class AudioService {
       .then(s => {
         s.gainNode = global.audioContext.createGain();
         s.gainNode.gain.value = 1.0;
-  
+
         s.sourceNode.connect(s.gainNode);
         s.gainNode.connect(global.audioContext.destination);
 
@@ -62,7 +62,7 @@ export class AudioService {
 
         resolve(s);
       });
-    });   
+    });
   }
 
   stop(sound: Sound): Promise<Sound> {
@@ -70,7 +70,7 @@ export class AudioService {
       if (!sound.sourceNode) {
         reject(new Error('SoundにAudioBufferSourceNodeが設定されていません'));
       }
-      
+
       sound.sourceNode.stop();
       sound.playing = false;
 

@@ -27,7 +27,7 @@ export class PlayerComponent implements OnInit {
     .then(s => {
       s.loading = false;
       this.update.emit(s);
-      console.log("Played");
+      console.log('Played');
       console.log(this.sound);
     });
   }
@@ -35,14 +35,14 @@ export class PlayerComponent implements OnInit {
   stop() {
     this.audioService.stop(this.sound)
     .then(s => {
-      console.log("Stopped");
+      console.log('Stopped');
       this.update.emit(s);
     });
   }
-  
+
   switchLoop() {
     this.sound.loop = !this.sound.loop;
-    console.log("loop: ", this.sound.loop);
+    console.log('loop: ', this.sound.loop);
     this.update.emit(this.sound);
   }
 
@@ -67,7 +67,7 @@ export class PlayerComponent implements OnInit {
     }
     // TODO: Volumeの最大値はModuleの一部として定数をまとめたファイルみたいなところで定義する
     this.sound.gainNode.gain.value = this.audioService.calcGainValue(v, 100);
-    console.log("Volume changed: ", this.sound.gainNode.gain.value);
+    console.log('Volume changed: ', this.sound.gainNode.gain.value);
     this.update.emit(this.sound);
   }
 

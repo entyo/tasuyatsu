@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Sound } from './shared/models/sound';
 
 export interface AppStoreSnapshot {
-  sound ? : {
+  sound ?: {
     [id: number]: Sound,
   };
 }
