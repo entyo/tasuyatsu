@@ -29,7 +29,7 @@ export class FileUploaderComponent {
       }
 
       let uploadTask = this.userRef.put(this.files.item(i));
-      uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
+      uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot: any) => {
         this.uploadProgress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
         console.log('Upload is ' + this.uploadProgress + '% done');
       }, () => {
@@ -39,8 +39,8 @@ export class FileUploaderComponent {
         let downloadURL = uploadTask.snapshot.downloadURL;
         const sound = new Sound(this.files.item(i).name, downloadURL);
         this.store.insert(sound);
-
         this.uploadProgress = 0;
+        return undefined;
       });
     }
   }
