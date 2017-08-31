@@ -1,5 +1,6 @@
 export class Sound {
   public id: number;
+  public fireDBKey: string;
   public sourceNode: AudioBufferSourceNode;
   public gainNode: GainNode;
   public playing = false;

@@ -4,8 +4,14 @@ import { Observable } from 'rxjs/Observable';
 import { AppStore } from '../../app.store';
 import { Sound } from '../models/sound';
 
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase';
+
 @Injectable()
 export class SoundStore {
+    private fireDB: FirebaseListObservable<any[]>;
+    private fireDBRef: firebase.database.Reference;
 
     get list(): Observable<Sound[]> {
         return this.appStore.map(appStore => {
@@ -15,8 +21,34 @@ export class SoundStore {
         });
     }
 
-    constructor(private appStore: AppStore) {
-        this.mockSetup();
+    constructor(private appStore: AppStore, afAuth: AngularFireAuth, afDB: AngularFireDatabase) {
+        afAuth.authState.subscribe(user => {
+        const store = this.appStore.snapshot;
+        if (!Object.keys(store.sound).length && !this.fireDB) {
+            this.mockSetup();
+        }
+
+        if (!user) {
+            return;
+        }
+
+        this.fireDBRef = firebase.database().ref().child('users/' + user.uid);
+        this.fireDB = afDB.list(this.fireDBRef, { preserveSnapshot: true });
+
+        this.fireDB.subscribe(snapshots => {
+            snapshots.forEach(snapshot => {
+                const sound = snapshot.val();
+                sound.fireDBKey = snapshot.key;
+
+                const existsIDs = Object.keys(store.sound);
+                if (existsIDs.find(id => parseInt(id, 10) === sound.id)) {
+                    this.update(sound.id, sound);
+                } else {
+                    this.insert(sound);
+                }
+            });
+          });
+        });
     }
 
     private mockSetup() {
@@ -38,16 +70,33 @@ export class SoundStore {
         sound.id = Object.keys(store.sound).length;
         store.sound[sound.id] = sound;
         this.appStore.patchValue(store);
+
+        if (this.fireDB) {
+            this.fireDB.push(sound);
+        }
     }
 
     update(id: number, sound: Sound): void {
         const store = this.appStore.snapshot;
         store.sound[sound.id] = sound;
         this.appStore.patchValue(store);
+
+        if (this.fireDB && sound.fireDBKey) {
+            const key = sound.fireDBKey;
+            this.fireDB.update(this.fireDBRef.child(key), sound)
+            .then(() => console.log('updated: ', sound.fireDBKey))
+            .catch(() => console.log('update failed', sound.fireDBKey));
+        }
     }
 
     delete(id: number): void {
         const store = this.appStore.snapshot;
+        const sound = store.sound[id];
+        if (this.fireDB && sound.fireDBKey) {
+            this.fireDB.remove(sound.fireDBKey)
+            .then(() => console.log('deleted: ', sound.fireDBKey))
+            .catch(() => console.log('deletion failed', sound.fireDBKey));
+        }
         store.sound[id] = undefined;
         this.appStore.patchValue(store);
     }
