@@ -1,6 +1,6 @@
 webpackJsonp([1,5],{
 
-/***/ 143:
+/***/ 144:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -59,100 +59,6 @@ AppStore = __decorate([
 ], AppStore);
 
 //# sourceMappingURL=app.store.js.map
-
-/***/ }),
-
-/***/ 144:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__global__ = __webpack_require__(403);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AudioService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var AudioService = (function () {
-    function AudioService() {
-    }
-    AudioService.prototype.load = function (sound) {
-        return new Promise(function (resolve, reject) {
-            // 既に一度音源を取得している場合、XHRをせず単にnodeを作り直す
-            if (sound.sourceNode) {
-                var b = sound.sourceNode.buffer;
-                sound.sourceNode = __WEBPACK_IMPORTED_MODULE_1__global__["a" /* audioContext */].createBufferSource();
-                sound.sourceNode.buffer = b;
-                sound.sourceNode.loop = sound.loop;
-                resolve(sound);
-                return;
-            }
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', sound.url, true);
-            xhr.responseType = 'arraybuffer';
-            xhr.onload = function () {
-                if (xhr.status !== 200) {
-                    reject(new Error('Audio data couldn\'t be loaded successfully; error code:' + xhr.statusText));
-                }
-                __WEBPACK_IMPORTED_MODULE_1__global__["a" /* audioContext */].decodeAudioData(xhr.response, function (buf) {
-                    sound.sourceNode = __WEBPACK_IMPORTED_MODULE_1__global__["a" /* audioContext */].createBufferSource();
-                    sound.sourceNode.buffer = buf;
-                    sound.sourceNode.loop = sound.loop;
-                    resolve(sound);
-                }, function () {
-                    reject(new Error('Audio data seemed to be loaded succesfully, but couldn\'t be decoded.'));
-                });
-            };
-            xhr.onerror = function () {
-                reject(new Error('Network error :-('));
-            };
-            xhr.send(null);
-        });
-    };
-    AudioService.prototype.play = function (sound) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            _this.load(sound)
-                .then(function (s) {
-                s.gainNode = __WEBPACK_IMPORTED_MODULE_1__global__["a" /* audioContext */].createGain();
-                s.gainNode.gain.value = 1.0;
-                s.sourceNode.connect(s.gainNode);
-                s.gainNode.connect(__WEBPACK_IMPORTED_MODULE_1__global__["a" /* audioContext */].destination);
-                s.sourceNode.start();
-                s.playing = true;
-                resolve(s);
-            });
-        });
-    };
-    AudioService.prototype.stop = function (sound) {
-        return new Promise(function (resolve, reject) {
-            if (!sound.sourceNode) {
-                reject(new Error('SoundにAudioBufferSourceNodeが設定されていません'));
-            }
-            sound.sourceNode.stop();
-            sound.playing = false;
-            resolve(sound);
-        });
-    };
-    AudioService.prototype.calcGainValue = function (vol, max) {
-        console.log(vol, max);
-        return Math.pow(vol / max, 2);
-    };
-    return AudioService;
-}());
-AudioService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
-    __metadata("design:paramtypes", [])
-], AudioService);
-
-//# sourceMappingURL=audio.service.js.map
 
 /***/ }),
 
@@ -255,11 +161,11 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__player_player_component__ = __webpack_require__(406);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__player_list_player_list_component__ = __webpack_require__(405);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shared_shared_module__ = __webpack_require__(407);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__app_store__ = __webpack_require__(143);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__audio_service__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__app_store__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__audio_service__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angularfire2__ = __webpack_require__(411);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_angularfire2_database__ = __webpack_require__(147);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_angularfire2_auth__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_angularfire2_auth__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__environments_environment__ = __webpack_require__(145);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__login_login_component__ = __webpack_require__(404);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__file_uploader_file_uploader_component__ = __webpack_require__(402);
@@ -328,8 +234,8 @@ AppModule = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_models_sound__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_stores_sound_store__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_models_sound__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_stores_sound_store__ = __webpack_require__(86);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(192);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FileUploaderComponent; });
@@ -424,7 +330,7 @@ var audioContext = new (window['AudioContext'] || window['webkitAudioContext'])(
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase_app__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
@@ -478,7 +384,8 @@ var _a;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_stores_sound_store__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_stores_sound_store__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__audio_service__ = __webpack_require__(84);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PlayerListComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -491,9 +398,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var PlayerListComponent = (function () {
-    function PlayerListComponent(store) {
+    function PlayerListComponent(store, audio) {
         this.store = store;
+        this.audio = audio;
     }
     PlayerListComponent.prototype.ngOnInit = function () {
     };
@@ -501,7 +410,15 @@ var PlayerListComponent = (function () {
         this.store.update(sound.id, sound);
     };
     PlayerListComponent.prototype.removeSound = function (sound) {
-        this.store.delete(sound.id);
+        var _this = this;
+        this.audio.stop(sound)
+            .then(function () {
+            _this.store.delete(sound.id);
+        })
+            .catch(function (error) {
+            console.log('Failed to stop sound: ', error);
+            _this.store.delete(sound.id);
+        });
     };
     return PlayerListComponent;
 }());
@@ -511,10 +428,10 @@ PlayerListComponent = __decorate([
         template: __webpack_require__(563),
         styles: [__webpack_require__(468)]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_stores_sound_store__["a" /* SoundStore */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_stores_sound_store__["a" /* SoundStore */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_stores_sound_store__["a" /* SoundStore */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_stores_sound_store__["a" /* SoundStore */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__audio_service__["a" /* AudioService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__audio_service__["a" /* AudioService */]) === "function" && _b || Object])
 ], PlayerListComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=player-list.component.js.map
 
 /***/ }),
@@ -524,8 +441,8 @@ var _a;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_models_sound__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__audio_service__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_models_sound__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__audio_service__ = __webpack_require__(84);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PlayerComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -627,7 +544,7 @@ var _a, _b;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_sound_store__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_sound_store__ = __webpack_require__(86);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SharedModule; });
 /* unused harmony export RootSharedModule */
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1075,6 +992,100 @@ module.exports = __webpack_require__(390);
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__global__ = __webpack_require__(403);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AudioService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var AudioService = (function () {
+    function AudioService() {
+    }
+    AudioService.prototype.load = function (sound) {
+        return new Promise(function (resolve, reject) {
+            // 既に一度音源を取得している場合、XHRをせず単にnodeを作り直す
+            if (sound.sourceNode) {
+                var b = sound.sourceNode.buffer;
+                sound.sourceNode = __WEBPACK_IMPORTED_MODULE_1__global__["a" /* audioContext */].createBufferSource();
+                sound.sourceNode.buffer = b;
+                sound.sourceNode.loop = sound.loop;
+                resolve(sound);
+                return;
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', sound.url, true);
+            xhr.responseType = 'arraybuffer';
+            xhr.onload = function () {
+                if (xhr.status !== 200) {
+                    reject(new Error('Audio data couldn\'t be loaded successfully; error code:' + xhr.statusText));
+                }
+                __WEBPACK_IMPORTED_MODULE_1__global__["a" /* audioContext */].decodeAudioData(xhr.response, function (buf) {
+                    sound.sourceNode = __WEBPACK_IMPORTED_MODULE_1__global__["a" /* audioContext */].createBufferSource();
+                    sound.sourceNode.buffer = buf;
+                    sound.sourceNode.loop = sound.loop;
+                    resolve(sound);
+                }, function () {
+                    reject(new Error('Audio data seemed to be loaded succesfully, but couldn\'t be decoded.'));
+                });
+            };
+            xhr.onerror = function () {
+                reject(new Error('Network error :-('));
+            };
+            xhr.send(null);
+        });
+    };
+    AudioService.prototype.play = function (sound) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.load(sound)
+                .then(function (s) {
+                s.gainNode = __WEBPACK_IMPORTED_MODULE_1__global__["a" /* audioContext */].createGain();
+                s.gainNode.gain.value = 1.0;
+                s.sourceNode.connect(s.gainNode);
+                s.gainNode.connect(__WEBPACK_IMPORTED_MODULE_1__global__["a" /* audioContext */].destination);
+                s.sourceNode.start();
+                s.playing = true;
+                resolve(s);
+            });
+        });
+    };
+    AudioService.prototype.stop = function (sound) {
+        return new Promise(function (resolve, reject) {
+            if (!sound.sourceNode) {
+                reject(new Error('SoundにAudioBufferSourceNodeが設定されていません'));
+            }
+            sound.sourceNode.stop();
+            sound.playing = false;
+            resolve(sound);
+        });
+    };
+    AudioService.prototype.calcGainValue = function (vol, max) {
+        console.log(vol, max);
+        return Math.pow(vol / max, 2);
+    };
+    return AudioService;
+}());
+AudioService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __metadata("design:paramtypes", [])
+], AudioService);
+
+//# sourceMappingURL=audio.service.js.map
+
+/***/ }),
+
+/***/ 85:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Sound; });
 var Sound = (function () {
     function Sound(title, url) {
@@ -1092,15 +1103,15 @@ var Sound = (function () {
 
 /***/ }),
 
-/***/ 85:
+/***/ 86:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_store__ = __webpack_require__(143);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_sound__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_store__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_sound__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(147);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase__ = __webpack_require__(192);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_firebase__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SoundStore; });
