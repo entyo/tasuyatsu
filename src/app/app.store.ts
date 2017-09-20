@@ -4,13 +4,13 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Sound } from './shared/models/sound';
 
 export interface AppStoreSnapshot {
-  sound ?: {
+  sound?: {
     [id: number]: Sound,
   };
 }
 
 @Injectable()
-export class AppStore extends BehaviorSubject < AppStoreSnapshot > {
+export class AppStore extends BehaviorSubject<AppStoreSnapshot> {
 
   private _snapshot: AppStoreSnapshot;
 

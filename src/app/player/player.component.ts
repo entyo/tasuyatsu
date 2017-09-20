@@ -26,20 +26,20 @@ export class PlayerComponent implements OnInit {
     this.update.emit(this.sound);
 
     this.audioService.play(this.sound, this.gain)
-    .then(s => {
-      s.loading = false;
-      this.update.emit(s);
-      console.log('Played');
-      console.log(this.sound);
-    });
+      .then(s => {
+        s.loading = false;
+        this.update.emit(s);
+        console.log('Played');
+        console.log(this.sound);
+      });
   }
 
   stop() {
     this.audioService.stop(this.sound)
-    .then(s => {
-      console.log('Stopped');
-      this.update.emit(s);
-    });
+      .then(s => {
+        console.log('Stopped');
+        this.update.emit(s);
+      });
   }
 
   switchLoop() {

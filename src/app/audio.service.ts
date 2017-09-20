@@ -10,7 +10,7 @@ export class AudioService {
   constructor() {}
 
   load(sound: Sound): Promise<Sound> {
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       // 既に一度音源を取得している場合、XHRをせず単にnodeを作り直す
       if (sound.sourceNode) {
         const b = sound.sourceNode.buffer;
@@ -50,18 +50,18 @@ export class AudioService {
   play(sound: Sound, gain = 1.0): Promise<Sound> {
     return new Promise((resolve, reject) => {
       this.load(sound)
-      .then(s => {
-        s.gainNode = global.audioContext.createGain();
-        s.gainNode.gain.value = gain;
+        .then(s => {
+          s.gainNode = global.audioContext.createGain();
+          s.gainNode.gain.value = gain;
 
-        s.sourceNode.connect(s.gainNode);
-        s.gainNode.connect(global.audioContext.destination);
+          s.sourceNode.connect(s.gainNode);
+          s.gainNode.connect(global.audioContext.destination);
 
-        s.sourceNode.start();
-        s.playing = true;
+          s.sourceNode.start();
+          s.playing = true;
 
-        resolve(s);
-      });
+          resolve(s);
+        });
     });
   }
 

@@ -8,7 +8,7 @@ h2 {
 
 h2 .fa {
   vertical-align: middle;
-  display:inline-block;
+  display: inline-block;
 }
 
 h2 span {
@@ -28,6 +28,10 @@ h2 span {
 }
 
 @keyframes spin {
-  0% {transform: rotate(0deg);}
-  100% {transform: rotate(360deg);}
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -22,12 +22,12 @@ export class PlayerListComponent implements OnInit {
 
   removeSound(sound: Sound) {
     this.audio.stop(sound)
-    .then(() => {
-      this.store.delete(sound.id);
-    })
-    .catch(error => {
-      this.store.delete(sound.id);
-    });
+      .then(() => {
+        this.store.delete(sound.id);
+      })
+      .catch(error => {
+        this.store.delete(sound.id);
+      });
   }
 
 }
