@@ -12,7 +12,7 @@ p {
 
 p .fa {
   vertical-align: middle;
-  display:inline-block;
+  display: inline-block;
 }
 
 p span {
@@ -37,8 +37,12 @@ p span {
 }
 
 @keyframes spin {
-  0% {transform: rotate(0deg);}
-  100% {transform: rotate(360deg);}
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .checkbox {
@@ -47,5 +51,5 @@ p span {
 }
 
 .song-title {
-  cursor: pointer;  
+  cursor: pointer;
 }

@@ -1,3 +1,3 @@
 'use strict';
 
-export let audioContext: AudioContext = new(window['AudioContext'] || window['webkitAudioContext'])();
+export let audioContext: AudioContext = new (window['AudioContext'] || window['webkitAudioContext'])();
