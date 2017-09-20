@@ -416,7 +416,6 @@ var PlayerListComponent = (function () {
             _this.store.delete(sound.id);
         })
             .catch(function (error) {
-            console.log('Failed to stop sound: ', error);
             _this.store.delete(sound.id);
         });
     };
@@ -468,7 +467,7 @@ var PlayerComponent = (function () {
         var _this = this;
         this.sound.loading = true;
         this.update.emit(this.sound);
-        this.audioService.play(this.sound)
+        this.audioService.play(this.sound, this.gain)
             .then(function (s) {
             s.loading = false;
             _this.update.emit(s);
@@ -503,14 +502,14 @@ var PlayerComponent = (function () {
         this.sound.editing = !this.sound.editing;
         this.update.emit(this.sound);
     };
-    PlayerComponent.prototype.changeVolume = function (v) {
-        if (!this.sound.gainNode) {
-            return;
-        }
+    PlayerComponent.prototype.onChangeGainRange = function (v) {
+        var _this = this;
         // TODO: Volumeの最大値はModuleの一部として定数をまとめたファイルみたいなところで定義する
-        this.sound.gainNode.gain.value = this.audioService.calcGainValue(v, 100);
-        console.log('Volume changed: ', this.sound.gainNode.gain.value);
-        this.update.emit(this.sound);
+        this.gain = this.audioService.calcGainValue(v, 100);
+        this.audioService.changeGain(this.sound, this.gain).then(function (sound) {
+            _this.update.emit(_this.sound);
+            console.log('Volume changed: ', sound.gainNode.gain.value);
+        });
     };
     return PlayerComponent;
 }());
@@ -978,7 +977,7 @@ module.exports = "<h2>\n  <i class=\"fa fa-music fa-fw\" aria-hidden=\"true\"></
 /***/ 564:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"player\">\n  <p>\n    <i class=\"fa fa-pencil\" aria-hidden=\"true\" (click)=\"switchEditMode()\"></i>\n    <span class=\"song-title\" (click)=\"switchEditMode()\">{{sound.title}}</span>\n    <i class=\"fa fa-trash fa-pull-right\" aria-hidden=\"true\" (click)=\"removeSound($event)\"></i>\n  </p>\n  <div class=\"form-group\" *ngIf=\"sound.editing\">\n    <input type=\"text\" class=\"form-control\" [(ngModel)]=\"sound.title\" placeholder=\"もっといいタイトルを頼む\">\n    <button type=\"submit\" class=\"btn btn-default\" (click)=\"switchEditMode()\">こり!</button>\n  </div>\n  <div>\n    <i class=\"fa fa-play-circle fa-fw\" aria-hidden=\"true\" (click)=\"play()\" *ngIf=\"!sound.playing && !sound.loading\"></i>\n    <i class=\"fa fa-stop-circle-o fa-fw\" aria-hidden=\"true\" (click)=\"stop()\" *ngIf=\"sound.playing && !sound.loading\"></i>\n    <i class=\"fa fa-refresh fa-fw loading\" aria-hidden=\"true\" *ngIf=\"sound.loading\"></i>\n    <div class=\"checkbox\">\n      <label>\n        <input type=\"checkbox\" (click)=\"switchLoop()\" /> loop\n      </label>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"control-label\">Volume</label>\n    <input type=\"range\" class=\"form-control\" min=\"0\" max=\"100\" value=\"50\" #ref (change)=\"changeVolume(ref.value)\" />\n  </div>\n</div>\n"
+module.exports = "<div class=\"player\">\n  <p>\n    <i class=\"fa fa-pencil\" aria-hidden=\"true\" (click)=\"switchEditMode()\"></i>\n    <span class=\"song-title\" (click)=\"switchEditMode()\">{{sound.title}}</span>\n    <i class=\"fa fa-trash fa-pull-right\" aria-hidden=\"true\" (click)=\"removeSound($event)\"></i>\n  </p>\n  <div class=\"form-group\" *ngIf=\"sound.editing\">\n    <input type=\"text\" class=\"form-control\" [(ngModel)]=\"sound.title\" placeholder=\"もっといいタイトルを頼む\">\n    <button type=\"submit\" class=\"btn btn-default\" (click)=\"switchEditMode()\">こり!</button>\n  </div>\n  <div>\n    <i class=\"fa fa-play-circle fa-fw\" aria-hidden=\"true\" (click)=\"play()\" *ngIf=\"!sound.playing && !sound.loading\"></i>\n    <i class=\"fa fa-stop-circle-o fa-fw\" aria-hidden=\"true\" (click)=\"stop()\" *ngIf=\"sound.playing && !sound.loading\"></i>\n    <i class=\"fa fa-refresh fa-fw loading\" aria-hidden=\"true\" *ngIf=\"sound.loading\"></i>\n    <div class=\"checkbox\">\n      <label>\n        <input type=\"checkbox\" (click)=\"switchLoop()\" /> loop\n      </label>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"control-label\">Volume</label>\n    <input type=\"range\" class=\"form-control\" min=\"0\" max=\"100\" value=\"50\" #ref (change)=\"onChangeGainRange(ref.value)\" />\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1044,13 +1043,14 @@ var AudioService = (function () {
             xhr.send(null);
         });
     };
-    AudioService.prototype.play = function (sound) {
+    AudioService.prototype.play = function (sound, gain) {
         var _this = this;
+        if (gain === void 0) { gain = 1.0; }
         return new Promise(function (resolve, reject) {
             _this.load(sound)
                 .then(function (s) {
                 s.gainNode = __WEBPACK_IMPORTED_MODULE_1__global__["a" /* audioContext */].createGain();
-                s.gainNode.gain.value = 1.0;
+                s.gainNode.gain.value = gain;
                 s.sourceNode.connect(s.gainNode);
                 s.gainNode.connect(__WEBPACK_IMPORTED_MODULE_1__global__["a" /* audioContext */].destination);
                 s.sourceNode.start();
@@ -1081,6 +1081,15 @@ var AudioService = (function () {
     AudioService.prototype.calcGainValue = function (vol, max) {
         console.log(vol, max);
         return Math.pow(vol / max, 2);
+    };
+    AudioService.prototype.changeGain = function (sound, gain) {
+        return new Promise(function (resolve) {
+            if (!sound.gainNode) {
+                return;
+            }
+            sound.gainNode.gain.value = gain;
+            resolve(sound);
+        });
     };
     return AudioService;
 }());
