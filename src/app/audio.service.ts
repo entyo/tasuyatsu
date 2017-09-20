@@ -47,12 +47,12 @@ export class AudioService {
     });
   }
 
-  play(sound: Sound): Promise<Sound> {
+  play(sound: Sound, gain = 1.0): Promise<Sound> {
     return new Promise((resolve, reject) => {
       this.load(sound)
       .then(s => {
         s.gainNode = global.audioContext.createGain();
-        s.gainNode.gain.value = 1.0;
+        s.gainNode.gain.value = gain;
 
         s.sourceNode.connect(s.gainNode);
         s.gainNode.connect(global.audioContext.destination);
@@ -91,6 +91,16 @@ export class AudioService {
   calcGainValue(vol: number, max: number) {
     console.log(vol, max);
     return Math.pow(vol / max, 2);
+  }
+
+  changeGain(sound: Sound, gain: number): Promise<Sound> {
+    return new Promise(resolve => {
+      if (!sound.gainNode) {
+        return;
+      }
+      sound.gainNode.gain.value = gain;
+      resolve(sound);
+    });
   }
 
 }

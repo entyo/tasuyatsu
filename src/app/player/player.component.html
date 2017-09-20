@@ -20,6 +20,6 @@
   </div>
   <div class="form-group">
     <label class="control-label">Volume</label>
-    <input type="range" class="form-control" min="0" max="100" value="50" #ref (change)="changeVolume(ref.value)" />
+    <input type="range" class="form-control" min="0" max="100" value="50" #ref (change)="onChangeGainRange(ref.value)" />
   </div>
 </div>
