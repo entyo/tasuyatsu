@@ -26,7 +26,6 @@ export class PlayerListComponent implements OnInit {
       this.store.delete(sound.id);
     })
     .catch(error => {
-      console.log('Failed to stop sound: ', error);
       this.store.delete(sound.id);
     });
   }
