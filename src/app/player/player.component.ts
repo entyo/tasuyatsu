@@ -41,9 +41,10 @@ export class PlayerComponent implements OnInit {
   }
 
   switchLoop() {
-    this.sound.loop = !this.sound.loop;
-    console.log('loop: ', this.sound.loop);
-    this.update.emit(this.sound);
+    this.audioService.switchLoop(this.sound).then(sound => {
+      this.update.emit(sound);
+      console.log('loop: ', this.sound.loop);
+    });
   }
 
   editTitle(newTitle: string) {

@@ -78,6 +78,16 @@ export class AudioService {
     });
   }
 
+  switchLoop(sound: Sound): Promise<Sound> {
+    return new Promise(resolve => {
+      sound.loop = !sound.loop;
+      if (sound.sourceNode) {
+        sound.sourceNode.loop = sound.loop;
+      }
+      resolve(sound);
+    });
+  }
+
   calcGainValue(vol: number, max: number) {
     console.log(vol, max);
     return Math.pow(vol / max, 2);
