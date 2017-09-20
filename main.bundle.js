@@ -485,9 +485,11 @@ var PlayerComponent = (function () {
         });
     };
     PlayerComponent.prototype.switchLoop = function () {
-        this.sound.loop = !this.sound.loop;
-        console.log('loop: ', this.sound.loop);
-        this.update.emit(this.sound);
+        var _this = this;
+        this.audioService.switchLoop(this.sound).then(function (sound) {
+            _this.update.emit(sound);
+            console.log('loop: ', _this.sound.loop);
+        });
     };
     PlayerComponent.prototype.editTitle = function (newTitle) {
         this.sound.title = newTitle;
@@ -976,7 +978,7 @@ module.exports = "<h2>\n  <i class=\"fa fa-music fa-fw\" aria-hidden=\"true\"></
 /***/ 564:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"player\">\n  <p>\n    <i class=\"fa fa-pencil\" aria-hidden=\"true\" (click)=\"switchEditMode()\"></i>\n    <span class=\"song-title\" (click)=\"switchEditMode()\">{{sound.title}}</span>\n    <i class=\"fa fa-trash fa-pull-right\" aria-hidden=\"true\" (click)=\"removeSound($event)\"></i>\n  </p>\n  <div class=\"form-group\" *ngIf=\"sound.editing\">\n    <input type=\"text\" class=\"form-control\" [(ngModel)]=\"sound.title\" placeholder=\"もっといいタイトルを頼む\">\n    <button type=\"submit\" class=\"btn btn-default\" (click)=\"switchEditMode()\">こり!</button>\n  </div>\n  <div>\n    <i class=\"fa fa-play-circle fa-fw\" aria-hidden=\"true\" (click)=\"play()\" *ngIf=\"!sound.playing && !sound.loading\"></i>\n    <i class=\"fa fa-stop-circle-o fa-fw\" aria-hidden=\"true\" (click)=\"stop()\" *ngIf=\"sound.playing && !sound.loading\"></i>\n    <i class=\"fa fa-refresh fa-fw loading\" aria-hidden=\"true\" *ngIf=\"sound.loading\"></i>\n    <div class=\"checkbox\">\n      <label>\n        <input type=\"checkbox\" (click)=\"switchLoop()\" [ngModel]=\"sound.loop\"> loop\n      </label>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"control-label\">Volume</label>\n    <input type=\"range\" class=\"form-control\" min=\"0\" max=\"100\" value=\"50\" #ref (change)=\"changeVolume(ref.value)\" />\n  </div>\n</div>\n"
+module.exports = "<div class=\"player\">\n  <p>\n    <i class=\"fa fa-pencil\" aria-hidden=\"true\" (click)=\"switchEditMode()\"></i>\n    <span class=\"song-title\" (click)=\"switchEditMode()\">{{sound.title}}</span>\n    <i class=\"fa fa-trash fa-pull-right\" aria-hidden=\"true\" (click)=\"removeSound($event)\"></i>\n  </p>\n  <div class=\"form-group\" *ngIf=\"sound.editing\">\n    <input type=\"text\" class=\"form-control\" [(ngModel)]=\"sound.title\" placeholder=\"もっといいタイトルを頼む\">\n    <button type=\"submit\" class=\"btn btn-default\" (click)=\"switchEditMode()\">こり!</button>\n  </div>\n  <div>\n    <i class=\"fa fa-play-circle fa-fw\" aria-hidden=\"true\" (click)=\"play()\" *ngIf=\"!sound.playing && !sound.loading\"></i>\n    <i class=\"fa fa-stop-circle-o fa-fw\" aria-hidden=\"true\" (click)=\"stop()\" *ngIf=\"sound.playing && !sound.loading\"></i>\n    <i class=\"fa fa-refresh fa-fw loading\" aria-hidden=\"true\" *ngIf=\"sound.loading\"></i>\n    <div class=\"checkbox\">\n      <label>\n        <input type=\"checkbox\" (click)=\"switchLoop()\" /> loop\n      </label>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"control-label\">Volume</label>\n    <input type=\"range\" class=\"form-control\" min=\"0\" max=\"100\" value=\"50\" #ref (change)=\"changeVolume(ref.value)\" />\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1064,6 +1066,15 @@ var AudioService = (function () {
             }
             sound.sourceNode.stop();
             sound.playing = false;
+            resolve(sound);
+        });
+    };
+    AudioService.prototype.switchLoop = function (sound) {
+        return new Promise(function (resolve) {
+            sound.loop = !sound.loop;
+            if (sound.sourceNode) {
+                sound.sourceNode.loop = sound.loop;
+            }
             resolve(sound);
         });
     };
