@@ -14,6 +14,8 @@ export class PlayerComponent implements OnInit {
   @Output() update = new EventEmitter<Sound>();
   @Output() remove = new EventEmitter<Sound>();
 
+  private gain: number;
+
   constructor(private audioService: AudioService) {}
 
   ngOnInit() {
@@ -23,7 +25,7 @@ export class PlayerComponent implements OnInit {
     this.sound.loading = true;
     this.update.emit(this.sound);
 
-    this.audioService.play(this.sound)
+    this.audioService.play(this.sound, this.gain)
     .then(s => {
       s.loading = false;
       this.update.emit(s);
@@ -62,14 +64,13 @@ export class PlayerComponent implements OnInit {
     this.update.emit(this.sound);
   }
 
-  changeVolume(v: number) {
-    if (!this.sound.gainNode) {
-      return;
-    }
+  onChangeGainRange(v: number) {
     // TODO: Volumeの最大値はModuleの一部として定数をまとめたファイルみたいなところで定義する
-    this.sound.gainNode.gain.value = this.audioService.calcGainValue(v, 100);
-    console.log('Volume changed: ', this.sound.gainNode.gain.value);
-    this.update.emit(this.sound);
+    this.gain = this.audioService.calcGainValue(v, 100);
+    this.audioService.changeGain(this.sound, this.gain).then(sound => {
+      this.update.emit(this.sound);
+      console.log('Volume changed: ', sound.gainNode.gain.value);
+    });
   }
 
 }
